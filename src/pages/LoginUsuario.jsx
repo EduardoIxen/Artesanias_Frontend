@@ -30,14 +30,12 @@ const LoginUsuario = () => {
     try {
         const login_response = await axios.post(api_url, data, config);
 
-        console.log(login_response.data);
-
         if (login_response.status === 200) {
           localStorage.setItem("token", login_response.data.token);
           localStorage.setItem("email", login_response.data.user.email);
           localStorage.setItem("nombre", login_response.data.user.nombre);
           localStorage.setItem("rol", "user");
-          navigate("/inicioadmin");
+          navigate("/iniciousr");
         }
     } catch (error) {
         if (error.response && error.response.status === 401) {

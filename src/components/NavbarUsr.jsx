@@ -1,10 +1,14 @@
 import React, { useState, useContext } from "react";
 import Menu from '@components/Menu';
+import AppContext from "../context/AppContext";
+import MiOrden from "../containers/MiOrden";
 import "@styles/Navbar.scss";
 import shoping_cart from "@icons/icon_shopping_cart.svg";
 
-const Header = () => {
+const HeaderUsr = () => {
   const [toggle, setToggle] = useState(false);
+  const [toggleOrders, setToggleOrders] = useState(false);
+  const {state} = useContext(AppContext);
 
   const handleToggle = () => {
     setToggle(!toggle);
@@ -17,12 +21,6 @@ const Header = () => {
           <li>
             Artesanías
           </li>
-          <li>
-            <a href="">Agregar Productos</a>
-          </li>
-          <li>
-            <a href="">Ordenes</a>
-          </li>
         </ul>
       </div>
       <div className="navbar-right">
@@ -30,11 +28,16 @@ const Header = () => {
           <li className="navbar-email" onClick={handleToggle}>
             {localStorage.getItem("email")}
           </li>
+          <li className="navbar-shoping-cart" onClick={() => setToggleOrders(!toggleOrders)}>
+            <img src={shoping_cart} alt="" />
+            {state.carrito.length && state.carrito.length  > 0 ? <div className="num-prods">{state.carrito.length}</div> : null}
+          </li>
         </ul>
       </div>
       {toggle && <Menu/>}
+      {toggleOrders && <MiOrden/>}
     </nav>
   );
 };
 
-export default Header;
+export default HeaderUsr;

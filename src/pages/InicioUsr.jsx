@@ -1,10 +1,13 @@
 import React from 'react';
+import ListaProductos from '../containers/ListaProductos';
+import NavbarUsr from '../components/NavbarUsr'
 
 const InicioUsr = () => {
 
     return (
         <div>
-            <h1>Hola desde usuario</h1>
+            <NavbarUsr />
+            <ListaProductos />
         </div>
     );
 }
