@@ -1,14 +1,24 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '../pages/Home';
-import NotFound from '../pages/NotFound';
+import Roles from '@pages/Roles';
+import LoginAdmin from '@pages/LoginAdmin';
+import InicioAdmin from '@pages/InicioAdmin';
+import LoginUsuario from '@pages/LoginUsuario';
+import InicioUsr from '@pages/InicioUsr';
+import RegistroUsuario from '@pages/RegistroUsuario';
+import NotFound from '@pages/NotFound';
 
 
 const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Roles />} />
+                <Route path='/loginadmin' element={<LoginAdmin />} />
+                <Route path='/inicioadmin' element={<InicioAdmin />} />
+                <Route path='/loginusr' element={<LoginUsuario />} />
+                <Route path='/iniciousr' element={<InicioUsr />} />
+                <Route path='/registro' element={<RegistroUsuario />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </BrowserRouter>

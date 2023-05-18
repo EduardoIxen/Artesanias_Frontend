@@ -16,6 +16,7 @@ module.exports = {
             '@components': path.resolve(__dirname, 'src/components/'),
             '@pages': path.resolve(__dirname, 'src/pages/'),
             '@styles': path.resolve(__dirname, 'src/styles/'),
+            '@icons': path.resolve(__dirname, 'src/assets/icons/'),
         }
     },
     module: {
@@ -42,7 +43,14 @@ module.exports = {
                     "css-loader",
                     "sass-loader",
                 ],
-            }
+            },
+            {
+                test: /\.(png|jpg|svg|jpeg|webp)$/, /*aquí en test agregas la expresión regular para procesar los diferentes tipos de imagenes que tengas.*/
+                type: 'asset/resource',
+                generator: {
+                   filename: 'assets/pictures/[hash][ext]', /*aquí en filename pones la carpeta en donde quieres que se guarden tus imagenes (le agrego el [hash] para evitar problemas con el cache, además [ext] hace referencia a la extensión del archivo que se haya procesado).*/
+                }
+             }
         ]
     },
     plugins : [
