@@ -21,10 +21,18 @@ const useInitialState = () => {
         })
     }
 
+    const eliminarTodoDelCarrito = () => {
+        setState({
+            ...state,
+            carrito: []
+        })
+    }
+
     return {
         state,
         agregarAlCarrito,
         eliminarDelCarrito,
+        eliminarTodoDelCarrito,
     }
 }
 

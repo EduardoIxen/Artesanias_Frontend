@@ -1,10 +1,15 @@
 import React, {useContext} from 'react'
 import ItemOrden from '@components/ItemOrden'
+import axios from 'axios';
 import AppContext from '../context/AppContext';
+import ruta_api from '@pages/Ruta';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import '@styles/MiOrden.scss'
 
 const MiOrden = () => {
     const {state} = useContext(AppContext);
+    const {eliminarTodoDelCarrito} = useContext(AppContext);
     var total = 0;
 
     const sumTotal = () => {
@@ -14,7 +19,7 @@ const MiOrden = () => {
         return sum.toFixed(2);
     }      
 
-    const handleCheckout = () => {
+    const handleCheckout = async() => {
         const listaSku = [];
 
         for (let i = 0; i < state.carrito.length; i++) {
@@ -24,8 +29,33 @@ const MiOrden = () => {
             }
         }
 
-        console.log(listaSku);
-        console.log(total);
+        const data = {
+            "productos": listaSku,
+            "total": total
+        }
+
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+        };
+
+        const api_url = ruta_api.ip + ":" + ruta_api.port + "/apiuser/pedido";
+        try {
+            const pedido_response = await axios.post(api_url, data, config);
+            if (pedido_response.status === 200) {
+                toast.success("Pedido realizado con éxito");
+                eliminarTodoDelCarrito();
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                toast.warning("Token no valido o ha expirado");
+            }
+            if (error.response && error.response.status === 500) {
+                toast.error("Internal server error");
+            }
+        }
     }
 
     return (
@@ -47,6 +77,18 @@ const MiOrden = () => {
 					Checkout
 				</button>
 			</div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
 		</aside>
     );
 

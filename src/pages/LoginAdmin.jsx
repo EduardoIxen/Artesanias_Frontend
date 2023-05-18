@@ -35,7 +35,8 @@ const LoginAdmin = () => {
         localStorage.setItem("email", login_response.data.usr.email);
         localStorage.setItem("nombre", login_response.data.usr.nombre);
         localStorage.setItem("rol", "admin");
-        navigateToHomeAdmin();
+        navigate("/inicioadmin");
+        //navigateToHomeAdmin();
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
